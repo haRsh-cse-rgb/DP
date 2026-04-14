@@ -4,23 +4,23 @@
 
 ``` java
 class Solution {
+   
     public int perfectSum(int[] nums, int target) {
+        
         return helper(nums, target, 0);
+        
     }
-
+    
     public int helper(int[] nums, int target, int i){
-        if(i == nums.length){
-            return (target == 0) ? 1 : 0;
+        
+        if(i==nums.length){
+            return (target==0) ? 1 : 0;
         }
-
-        if(target < 0){
+        if(target <0){
             return 0;
         }
-
-        int include = helper(nums, target - nums[i], i + 1);
-        int exclude = helper(nums, target, i + 1);
-
-        return include + exclude;
+        
+        return helper(nums, target-nums[i], i+1) + helper(nums, target, i+1);
     }
 }
 ```
@@ -32,29 +32,32 @@ class Solution {
 ``` java
 class Solution {
     public int perfectSum(int[] nums, int target) {
-        int n = nums.length;
-        Integer[][] dp = new Integer[n+1][target+1];
-
+        
+        int n=nums.length;
+        
+        Integer[][] dp= new Integer[n+1][target+1];
+        
+        
         return helper(nums, target, 0, dp);
+        
     }
-
+    
     public int helper(int[] nums, int target, int i, Integer[][] dp){
-        if(i == nums.length){
-            return (target == 0) ? 1 : 0;
+        
+        if(i==nums.length){
+            return (target==0) ? 1 : 0;
         }
-
-        if(target < 0){
+        if(target <0){
             return 0;
         }
-
+        
         if(dp[i][target] != null){
             return dp[i][target];
         }
-
-        int include = helper(nums, target - nums[i], i + 1, dp);
-        int exclude = helper(nums, target, i + 1, dp);
-
-        return dp[i][target] = include + exclude;
+        
+        dp[i][target]= helper(nums, target-nums[i], i+1, dp) + helper(nums, target, i+1, dp);
+        
+        return dp[i][target];
     }
 }
 ```
