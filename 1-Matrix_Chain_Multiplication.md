@@ -104,45 +104,33 @@ so that every interval is computed only once.
 
 ```java
 class Solution {
-
     static int matrixMultiplication(int arr[]) {
-
-        int n = arr.length;
-
-        int[][] dp = new int[n][n];
-
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                dp[i][j] = -1;
-            }
-        }
-
-        return mcm(arr, 1, n - 1, dp);
+        
+        int n=arr.length;
+        Integer[][] dp= new Integer[n+1][n+1];
+       return mcm(arr, 1, n-1, dp);
+        
     }
-
-    static int mcm(int[] arr, int i, int j, int[][] dp) {
-
-        if(i >= j) {
+    
+    static int mcm(int arr[], int i , int j, Integer[][] dp){
+        
+        if(i>=j){
             return 0;
         }
-
-        if(dp[i][j] != -1) {
+        if(dp[i][j] != null){
             return dp[i][j];
         }
-
-        int result = Integer.MAX_VALUE;
-
-        for(int k = i; k < j; k++) {
-
-            int score =
-                    mcm(arr, i, k, dp)
-                  + mcm(arr, k + 1, j, dp)
-                  + arr[i - 1] * arr[k] * arr[j];
-
-            result = Math.min(result, score);
+         int result=Integer.MAX_VALUE;
+        
+        for(int k=i ; k<j ; k++){
+            int score = mcm(arr, i, k, dp) 
+            + mcm(arr, k+1, j, dp) + 
+            arr[i-1] * arr[k] * arr[j];
+            
+            result=Math.min(result, score);
         }
-
-        return dp[i][j] = result;
+        
+        return dp[i][j]=result;
     }
 }
 ```
